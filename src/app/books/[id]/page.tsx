@@ -58,8 +58,9 @@ const bookNotes = [
   // ... 其他笔记数据
 ];
 
-export default async function BookNotePage({ params }: { params: { id: string } }) {
-  const note = bookNotes.find((note) => note.id === parseInt(params.id));
+export default async function BookNotePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const note = bookNotes.find((note) => note.id === parseInt(resolvedParams.id));
 
   if (!note) {
     notFound();
